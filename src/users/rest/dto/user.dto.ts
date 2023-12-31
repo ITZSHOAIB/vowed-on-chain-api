@@ -28,6 +28,11 @@ export class UserDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  password: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   @IsPhoneNumber('IN')
   phoneNumber: string;
 

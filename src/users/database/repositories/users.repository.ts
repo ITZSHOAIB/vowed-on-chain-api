@@ -3,8 +3,9 @@ import { User } from '../schemas/user.schema';
 import { Model } from 'mongoose';
 import { Injectable, Logger } from '@nestjs/common';
 import { IUsersRepository } from './users.repository.interface';
-import { UserDto } from 'src/users/rest/dto/user.dto';
 import { UserMapper } from 'src/users/mappers/user.mapper';
+import { GetUserDto } from 'src/users/rest/dto/get-user.dto';
+import { UserDto } from 'src/users/rest/dto/user.dto';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -16,16 +17,14 @@ export class UsersRepository implements IUsersRepository {
     return createdUser._id.toString();
   }
 
-  async getAll(): Promise<UserDto[]> {
-    const users = await this.userModel.find();
-    return users.map((user) =>
-      UserMapper.fromUserSchemaToUserDto(user._id.toString(), user),
-    );
+  async getById(id: string): Promise<GetUserDto> {
+    const user = await this.userModel.findOne({ _id: id });
+    return UserMapper.dbToGetUserDto(user._id.toString(), user);
   }
 
-  async getById(id: string): Promise<UserDto> {
-    const user = await this.userModel.findOne({ _id: id });
-    return UserMapper.fromUserSchemaToUserDto(user._id.toString(), user);
+  async getByEmail(email: string): Promise<UserDto> {
+    const user = await this.userModel.findOne({ email });
+    return UserMapper.dbToUserDto(user._id.toString(), user);
   }
 
   async update(id: string, user: Partial<User>): Promise<void> {
