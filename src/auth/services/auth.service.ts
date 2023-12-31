@@ -17,7 +17,6 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto): Promise<string> {
-    console.log(process.env.JWT_SECRET);
     const user = await this.usersAuthService.getUserByEmail(loginDto.email);
     if (
       user === null ||
@@ -32,5 +31,14 @@ export class AuthService {
     };
 
     return this.jwtService.signAsync(payload);
+  }
+
+  async validateUser(payload) {
+    const user = await this.usersAuthService.getUserByEmail(payload.email);
+
+    if (user !== null && user.email === payload.email) {
+      return user;
+    }
+    throw new UnauthorizedException();
   }
 }
