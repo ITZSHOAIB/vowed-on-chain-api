@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { CONTRACT_STATUS } from 'src/wedding-contracts/database/schemas/wedding-contract.schema';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class WeddingContractDto {
   @ApiProperty()
@@ -15,12 +14,6 @@ export class WeddingContractDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  @IsEnum(CONTRACT_STATUS)
-  status: CONTRACT_STATUS;
-
-  @ApiProperty()
-  @IsOptional()
   @IsString()
   smartContractAddress: string;
 }

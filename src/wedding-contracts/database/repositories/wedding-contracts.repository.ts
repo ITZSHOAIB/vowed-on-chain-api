@@ -11,20 +11,13 @@ export class WeddingContractsRepository implements IWeddingContractsRepository {
     private weddingContractModel: Model<WeddingContract>,
   ) {}
 
-  async create(owner: string): Promise<string> {
-    const newWeddingContract = new this.weddingContractModel({
-      owner,
-    });
+  async create(weddingContract: Omit<WeddingContract, '_id'>): Promise<string> {
+    const newWeddingContract = new this.weddingContractModel(weddingContract);
     const createdWeddingContract = await newWeddingContract.save();
     return createdWeddingContract._id.toString();
   }
 
-  async update(
-    id: string,
-    weddingContract: Partial<WeddingContract>,
-  ): Promise<void> {
-    await this.weddingContractModel.findByIdAndUpdate(id, weddingContract, {
-      new: true,
-    });
+  async getByOwner(owner: string): Promise<WeddingContract[]> {
+    return this.weddingContractModel.find({ owner });
   }
 }
