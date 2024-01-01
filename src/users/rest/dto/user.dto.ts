@@ -4,7 +4,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
 } from 'class-validator';
 
@@ -29,12 +28,6 @@ export class UserDto {
   @IsNotEmpty()
   @IsString()
   password: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  @IsPhoneNumber('IN')
-  phoneNumber: string;
 
   @ApiProperty()
   @IsOptional()

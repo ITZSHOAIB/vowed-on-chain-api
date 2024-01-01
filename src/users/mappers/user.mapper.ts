@@ -6,45 +6,39 @@ import { UserDto } from '../rest/dto/user.dto';
 
 export class UserMapper {
   static dbToGetUserDto(id: string, user: User): GetUserDto {
-    const { fullName, email, phoneNumber, verified } = user;
+    const { fullName, email, verified } = user;
     return {
       id,
       fullName,
       email,
-      phoneNumber,
       verified,
     };
   }
 
   static dbToUserDto(id: string, user: User): UserDto {
-    const { fullName, email, phoneNumber, verified, password } = user;
+    const { fullName, email, verified, password } = user;
     return {
       id,
       fullName,
       email,
-      phoneNumber,
       verified,
       password,
     };
   }
 
   static createUserDtoToDb(user: CreateUserDto): User {
-    const { fullName, email, phoneNumber, password } = user;
+    const { fullName, email, password } = user;
     return {
       fullName,
       email,
-      phoneNumber,
       password,
     };
   }
 
   static updateUserDtoToDb(user: UpdateUserDto): Partial<User> {
-    const { fullName, email, phoneNumber, verified } = user;
+    const { fullName } = user;
     return {
       ...(fullName && { fullName }),
-      ...(email && { email }),
-      ...(phoneNumber && { phoneNumber }),
-      ...(verified && { verified }),
     };
   }
 }

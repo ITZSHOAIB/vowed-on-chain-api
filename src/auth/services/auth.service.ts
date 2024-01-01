@@ -18,6 +18,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<string> {
     const user = await this.usersAuthService.getUserByEmail(loginDto.email);
+    console.log(user);
     if (
       user === null ||
       !bcrypt.compareSync(loginDto.password, user.password)
