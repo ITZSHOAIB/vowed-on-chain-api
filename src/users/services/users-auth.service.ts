@@ -4,6 +4,7 @@ import {
   USERS_REPOSITORY,
 } from '../database/repositories/users.repository.interface';
 import { UserDto } from '../rest/dto/user.dto';
+import { UserMapper } from '../mappers/user.mapper';
 
 export const USERS_AUTH_SERVICE = 'USERS_AUTH_SERVICE';
 
@@ -15,6 +16,7 @@ export class UsersAuthService {
   ) {}
 
   async getUserByEmail(email: string): Promise<UserDto> {
-    return this.usersRepository.getByEmail(email);
+    const user = await this.usersRepository.getByEmail(email);
+    return UserMapper.dbToUserDto(user);
   }
 }

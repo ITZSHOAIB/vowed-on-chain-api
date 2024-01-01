@@ -23,7 +23,8 @@ export class UsersService {
   }
 
   async getUserById(id: string): Promise<GetUserDto> {
-    return await this.usersRepository.getById(id);
+    const user = await this.usersRepository.getById(id);
+    return UserMapper.dbToGetUserDto(user);
   }
 
   async updateUser(id: string, user: UpdateUserDto): Promise<void> {

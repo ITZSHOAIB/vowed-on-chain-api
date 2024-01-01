@@ -5,20 +5,20 @@ import { UpdateUserDto } from '../rest/dto/update-user.dto';
 import { UserDto } from '../rest/dto/user.dto';
 
 export class UserMapper {
-  static dbToGetUserDto(id: string, user: User): GetUserDto {
-    const { fullName, email, verified } = user;
+  static dbToGetUserDto(user: User): GetUserDto {
+    const { _id, fullName, email, verified } = user;
     return {
-      id,
+      id: _id.toString(),
       fullName,
       email,
       verified,
     };
   }
 
-  static dbToUserDto(id: string, user: User): UserDto {
-    const { fullName, email, verified, password } = user;
+  static dbToUserDto(user: User): UserDto {
+    const { _id, fullName, email, verified, password } = user;
     return {
-      id,
+      id: _id.toString(),
       fullName,
       email,
       verified,
@@ -26,7 +26,7 @@ export class UserMapper {
     };
   }
 
-  static createUserDtoToDb(user: CreateUserDto): User {
+  static createUserDtoToDb(user: CreateUserDto): Omit<User, '_id'> {
     const { fullName, email, password } = user;
     return {
       fullName,
@@ -35,7 +35,7 @@ export class UserMapper {
     };
   }
 
-  static updateUserDtoToDb(user: UpdateUserDto): Partial<User> {
+  static updateUserDtoToDb(user: UpdateUserDto): Partial<Omit<User, '_id'>> {
     const { fullName } = user;
     return {
       ...(fullName && { fullName }),
